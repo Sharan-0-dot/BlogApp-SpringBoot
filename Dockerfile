@@ -7,4 +7,4 @@ FROM eclipse-temurin:21-jdk
 COPY --from=build /target/Blog-0.0.1-SNAPSHOT.jar Blog.jar
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "Blog.jar"]
+ENTRYPOINT ["sh", "-c" , "java -jar Blog.jar"]
