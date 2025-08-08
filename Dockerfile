@@ -1,10 +1,13 @@
-# Use Maven to build the app
 FROM maven:3.9.5-eclipse-temurin-21 AS build
-COPY . .
+WORKDIR /app
+COPY pom.xml .
+RUN mvn dependency:go-offline
+COPY src ./src
 RUN mvn clean package -DskipTests
+FROM openjdk:21-jdk-slim
+WORKDIR /app
+COPY --from=build /app/target/Blog-0.0.1-SNAPSHOT.jar .
 
-FROM eclipse-temurin:21-jdk
-COPY --from=build /target/Blog-0.0.1-SNAPSHOT.jar Blog.jar
 EXPOSE 8080
 
-ENTRYPOINT ["sh", "-c" , "java -jar Blog.jar"]
+ENTRYPOINT ["java", "-jar", "/app/Blog-0.0.1-SNAPSHOT.jar"]
