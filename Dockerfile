@@ -5,8 +5,6 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 FROM eclipse-temurin:21-jdk
-WORKDIR /app
-
 COPY --from=build /target/Blog-0.0.1-SNAPSHOT.jar Blog.jar
 EXPOSE 8080
 
