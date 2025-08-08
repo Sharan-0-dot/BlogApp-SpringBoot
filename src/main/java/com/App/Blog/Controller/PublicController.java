@@ -36,7 +36,7 @@ public class PublicController {
         } catch (Exception e) {
             PublicController.log.error(e.getLocalizedMessage());
         }
-        return new ResponseEntity<>("User not verified", HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>("User not verified Successfully", HttpStatus.UNAUTHORIZED);
     }
 
     @PostMapping("/register")
