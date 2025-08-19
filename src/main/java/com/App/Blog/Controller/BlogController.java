@@ -4,6 +4,7 @@ import com.App.Blog.Model.BlogPost;
 import com.App.Blog.Model.BlogPostDTO;
 import com.App.Blog.Service.BlogService;
 import lombok.extern.slf4j.Slf4j;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,10 +39,10 @@ public class BlogController {
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
-    @DeleteMapping("/")
-    public ResponseEntity<?> deleteBlog(@RequestBody BlogPost post) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteBlog(@PathVariable String id) {
         try {
-            return new ResponseEntity<>(blogService.deleteBlog(post), HttpStatus.OK);
+            return new ResponseEntity<>(blogService.deleteBlog(new ObjectId(id)), HttpStatus.OK);
         } catch (Exception e) {
             log.error(e.getMessage());
         }

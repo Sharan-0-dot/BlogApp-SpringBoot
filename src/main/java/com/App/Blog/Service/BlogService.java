@@ -6,6 +6,7 @@ import com.App.Blog.Model.BlogResponseDTO;
 import com.App.Blog.Model.User;
 import com.App.Blog.Repository.BlogRepo;
 import com.App.Blog.Repository.UserRepo;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,7 @@ public class BlogService {
         List<BlogResponseDTO> list = new ArrayList<>();
         for(BlogPost posted : repo.findAll()) {
             list.add(BlogResponseDTO.builder()
+                    .id(posted.getId().toString())
                     .authorName(posted.getAuthorName())
                     .content(posted.getContent())
                     .created(posted.getCreated())
@@ -49,6 +51,7 @@ public class BlogService {
                 .build();
         BlogPost posted = repo.save(newPost);
         return BlogResponseDTO.builder()
+                .id(posted.getId().toString())
                 .authorName(posted.getAuthorName())
                 .content(posted.getContent())
                 .created(posted.getCreated())
@@ -65,6 +68,7 @@ public class BlogService {
         curPost.setContent(post.getContent());
         BlogPost posted = repo.save(curPost);
         return BlogResponseDTO.builder()
+                .id(posted.getId().toString())
                 .authorName(posted.getAuthorName())
                 .content(posted.getContent())
                 .created(posted.getCreated())
@@ -73,13 +77,14 @@ public class BlogService {
                 .build();
     }
 
-    public BlogResponseDTO deleteBlog(BlogPost post) throws Exception {
-        BlogPost posted = repo.findById(post.getId()).orElse(null);
+    public BlogResponseDTO deleteBlog(ObjectId id) throws Exception {
+        BlogPost posted = repo.findById(id).orElse(null);
         if(posted == null) {
             throw new Exception("Post Not found");
         }
         repo.deleteById(posted.getId());
         return BlogResponseDTO.builder()
+                .id(posted.getId().toString())
                 .authorName(posted.getAuthorName())
                 .content(posted.getContent())
                 .created(posted.getCreated())
@@ -92,6 +97,7 @@ public class BlogService {
         List<BlogResponseDTO> list = new ArrayList<>();
         for(BlogPost posted : repo.findByPostedUser(user)) {
             list.add(BlogResponseDTO.builder()
+                            .id(posted.getId().toString())
                             .authorName(posted.getAuthorName())
                             .content(posted.getContent())
                             .created(posted.getCreated())
