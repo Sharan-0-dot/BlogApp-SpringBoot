@@ -1,6 +1,5 @@
 package com.App.Blog.Service;
 
-import com.App.Blog.Model.BlogPost;
 import com.App.Blog.Model.BlogResponseDTO;
 import com.App.Blog.Model.User;
 import com.App.Blog.Repository.BlogRepo;

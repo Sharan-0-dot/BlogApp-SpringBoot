@@ -35,7 +35,8 @@ public class SecrityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/user/**", "/blog/**").authenticated()
+                        .requestMatchers("/User/**", "/blog/**").authenticated()
+                        .requestMatchers("/ws/**").permitAll()
                         .anyRequest().permitAll())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
